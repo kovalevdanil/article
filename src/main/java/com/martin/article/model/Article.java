@@ -48,4 +48,37 @@ public class Article {
             joinColumns = {@JoinColumn(name = "article_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private List<User> usersDisliked;
+
+    @OneToMany(targetEntity = Comment.class, mappedBy = "article")
+    private List<Comment> comments;
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+    }
+
+    public void addUserLiked(User user){
+        if (!userLiked(user))
+            usersLiked.add(user);
+    }
+
+    public void addUserDisliked(User user) {
+        if (!userDisliked(user))
+            usersDisliked.add(user);
+    }
+
+    public boolean userLiked(User user){
+        return usersLiked.stream().anyMatch(u -> u.getId().equals(user.getId()));
+    }
+
+    public boolean userDisliked(User user){
+        return usersDisliked.stream().anyMatch(u -> u.getId().equals(user.getId()));
+    }
+
+    public boolean removeUserLiked(User user) {
+        return usersLiked.remove(user);
+    }
+
+    public boolean removeUserDisliked(User user) {
+        return usersDisliked.remove(user);
+    }
 }

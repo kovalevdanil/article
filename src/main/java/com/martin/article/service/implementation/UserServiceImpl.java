@@ -1,14 +1,12 @@
 package com.martin.article.service.implementation;
 
-import com.martin.article.exception.UsernameAlreadyExistsException;
+import com.martin.article.exception.user.UsernameAlreadyExistsException;
 import com.martin.article.model.User;
 import com.martin.article.repository.UserRepository;
 import com.martin.article.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
+    public User save(User user) throws UsernameAlreadyExistsException {
         User userWithUsername = findUserByUsername(user.getUsername());
         if (userWithUsername != null)
             throw new UsernameAlreadyExistsException();

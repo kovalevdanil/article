@@ -1,20 +1,17 @@
 package com.martin.article.controller;
 
 import com.martin.article.dto.UserDto;
-import com.martin.article.exception.PasswordsDontMatchException;
-import com.martin.article.exception.UsernameAlreadyExistsException;
+import com.martin.article.exception.user.PasswordsDontMatchException;
+import com.martin.article.exception.user.UsernameAlreadyExistsException;
 import com.martin.article.form.SignupForm;
 import com.martin.article.model.User;
 import com.martin.article.service.UserService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = {"application/json"})
@@ -43,6 +40,11 @@ public class UserController {
         User user = userService.findUserById(id);
         if (user == null)
             return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(new UserDto(user));
+    }
+
+    @GetMapping("me")
+    public ResponseEntity<UserDto> getMe(@AuthenticationPrincipal User user){
         return ResponseEntity.ok(new UserDto(user));
     }
 }

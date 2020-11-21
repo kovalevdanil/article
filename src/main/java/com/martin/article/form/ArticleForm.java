@@ -17,8 +17,8 @@ public class ArticleForm {
 
     public Article toArticle() {
         Article article = new Article();
-        article.setTitle(title);
-        article.setContent(content);
+        article.setTitle(title.trim());
+        article.setContent(content.trim());
         article.setPublicationDate(new Date());
 
         return article;

@@ -1,6 +1,6 @@
 package com.martin.article.form;
 
-import com.martin.article.exception.PasswordsDontMatchException;
+import com.martin.article.exception.user.PasswordsDontMatchException;
 import com.martin.article.model.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
